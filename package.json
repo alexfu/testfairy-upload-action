@@ -1,14 +1,14 @@
 {
   "name": "testfairy-upload-action",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "index.js",
   "scripts": {
     "build": "ncc build index.js --license licenses.txt"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Alex Fu <alexfu@fastmail.com>",
+  "license": "MIT",
+  "description": "GitHub Action that uploads builds to TestFairy",
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
