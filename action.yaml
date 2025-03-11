@@ -1,0 +1,17 @@
+name: 'TestFairy Upload'
+description: 'Upload build to TestFairy'
+inputs:
+  api-key:
+    description: "Your API application key. See https://app.testfairy.com/settings for details."
+    required: true
+  file:
+    description: "Android Package Kit (APK), Android App Bundle (AAB), iOS package App Store (IPA), or ZIP (MacOS) file data."
+    required: true
+  groups:
+    description: "Comma-separated list of tester groups that get permission to download this app."
+  notify:
+    description: "Send email to all users in 'groups'. It can be on or off. Default is off."
+    default: "off"
+runs:
+  using: "node20"
+  main: "index.js"
