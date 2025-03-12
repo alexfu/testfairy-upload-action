@@ -35764,8 +35764,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"application/1d-interleaved-parityfec
 var __webpack_exports__ = {};
 const core = __nccwpck_require__(7484);
 const fs = __nccwpck_require__(9896);
-const index_FormData = __nccwpck_require__(6454);
-const axios = __nccwpck_require__(7269);
+const { default: axios } = __nccwpck_require__(7269);
 
 async function run() {
   try {
@@ -35774,19 +35773,26 @@ async function run() {
     const groups = core.getInput('groups');
     const notify = core.getInput('notify');
 
-    const data = new index_FormData();
-    data.set('api_key', apiKey);
-    data.set('file', fs.createReadStream(file));
+    const data = {
+      'api_key': apiKey,
+      'file': fs.createReadStream(file)
+    };
 
     if (groups) {
-      data.set('groups', groups);
+      data['groups'] = groups;
     }
 
     if (notify) {
-      data.set('notify', notify);
+      data['notify'] = notify;
     }
 
-    await axios.post('https://app.testfairy.com/api/upload', data);
+    const opts = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+
+    await axios.post('https://app.testfairy.com/api/upload', data, opts);
   } catch (error) {
     core.setFailed(error);
   }
