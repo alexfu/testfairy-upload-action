@@ -1,7 +1,6 @@
 const core = require('@actions/core');
 const fs = require('fs');
-const FormData = require('form-data');
-const axios = require('axios');
+const { default: axios } = require('axios');
 
 async function run() {
   try {
@@ -10,19 +9,26 @@ async function run() {
     const groups = core.getInput('groups');
     const notify = core.getInput('notify');
 
-    const data = new FormData();
-    data.set('api_key', apiKey);
-    data.set('file', fs.createReadStream(file));
+    const data = {
+      'api_key': apiKey,
+      'file': fs.createReadStream(file)
+    };
 
     if (groups) {
-      data.set('groups', groups);
+      data['groups'] = groups;
     }
 
     if (notify) {
-      data.set('notify', notify);
+      data['notify'] = notify;
     }
 
-    await axios.post('https://app.testfairy.com/api/upload', data);
+    const opts = {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+
+    await axios.post('https://app.testfairy.com/api/upload', data, opts);
   } catch (error) {
     core.setFailed(error);
   }
